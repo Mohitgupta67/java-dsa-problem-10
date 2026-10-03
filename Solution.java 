@@ -1,0 +1,66 @@
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+
+public class Solution {
+
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head.next == null) {
+            return null;
+        }
+        int size = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            curr = curr.next;
+            size++;
+        }
+        if (n == size) {
+            return head.next;
+        }
+
+        int indexToSearch = size - n;
+        ListNode prev = head;
+        int i = 0;
+
+        while (i < indexToSearch - 1) {
+            prev = prev.next;
+            i++;
+        }
+
+        prev.next = prev.next.next;
+        return head;
+    }
+
+    public static void printList(ListNode head) {
+        ListNode curr = head;
+        while (curr != null) {
+            System.out.println(curr.val + "");
+            curr = curr.next;
+        }
+
+        System.out.println("null");
+    }
+
+    public static void main(String[] args) {
+
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
+
+        System.out.println("Original List:");
+        printList(head);
+
+        int n = 2;
+        head = removeNthFromEnd(head, n);
+
+        System.out.println("\nModified List after removing " + n + "nd from end:");
+        printList(head);
+    }
+}
